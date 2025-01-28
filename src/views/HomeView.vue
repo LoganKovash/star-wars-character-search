@@ -4,6 +4,7 @@
       <input 
         type="text" 
         v-model="searchQuery"
+        @input="validateInput"
         placeholder="Search for a character" 
         class="text-white py-2 px-1 w-full bg-transparent border-b focus:border-app-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71]"
       />
@@ -34,6 +35,23 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
+const searchQuery = ref('');
+const characters = ref([]);
+const error = ref(null);
+let timeout = null;
+
+const validateInput = () => {
+  // Allow only letters, numbers, and spaces
+  const validPattern = /^[a-zA-Z0-9\s]*$/;
+
+  if (!validPattern.test(searchQuery.value)) {
+    error.value = "Special characters are not allowed!";
+    searchQuery.value = searchQuery.value.replace(/[^a-zA-Z0-9\s]/g, ""); // Remove invalid characters
+  } else {
+    error.value = ""; // Clear error if input is valid
+  }
+}
+
 // Pushes user to the selected characters profile page
 const viewCharacter = (character) => {
   const characterId = character.url.match(/\/(\d+)\/$/)[1]; // Extract ID from API URL
@@ -46,10 +64,6 @@ const viewCharacter = (character) => {
   })
 }
 
-const searchQuery = ref('');
-const characters = ref([]);
-const error = ref(null);
-let timeout = null;
 
 // Fetches all the characters that match the search and saves them to the characters array
 const fetchCharacters = async () => {

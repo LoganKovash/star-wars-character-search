@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen w-full flex flex-col font-Orbitron bg-app-background">
+  <div class="h-screen w-full flex flex-col font-Orbitron bg-app-background">
     <SiteNavigation />
     <RouterView />
   </div>
