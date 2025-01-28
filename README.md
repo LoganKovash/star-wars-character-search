@@ -10,6 +10,13 @@ npm install
 npm run dev
 ```
 
+### Start the local server
+
+```sh
+cd server
+node server.js
+```
+
 ### Compile and Minify for Production
 
 ```sh
